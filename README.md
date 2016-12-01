@@ -4,6 +4,7 @@ December 1, 2016
 
 
 
+
 # Source document
 A blog post [http://researchmatters.blogs.census.gov/2016/12/01/how-much-do-startups-impact-employment-growth-in-the-u-s/](by Jim Lawrence)
 
@@ -12,8 +13,8 @@ Data to produce a graph like this can be found at [https://www.census.gov/ces/da
 
 ![Select Firm Age](Selection_316.png)
 
-# Creating Figure 1
-We will illustrate how to generate Figure 1 using R. Users wishing to use Javascript, SAS, or Excel, or Python, can achieve the same goal using the tool of their choice. Note that we will use the full CSV file at [http://www2.census.gov/ces/bds/firm/bds_f_age_release.csv](), but users might also want to consult the [https://www.census.gov/data/developers/data-sets/business-dynamics.html](BDS API).
+# Getting and manipulating the data
+We will illustrate how to generate Figure 1 using R (R Core Team, 2016). Users wishing to use Javascript, SAS, or Excel, or Python, can achieve the same goal using the tool of their choice. Note that we will use the full CSV file at [http://www2.census.gov/ces/bds/firm/bds_f_age_release.csv](), but users might also want to consult the [https://www.census.gov/data/developers/data-sets/business-dynamics.html](BDS API).
 
 
 ```r
@@ -54,4 +55,8 @@ names(analysis) <- c("Year","Employment","Job Creation by Startups", "Job Creati
 
 Now we simply plot this for the time period 2004-2014:
 ![](README_files/figure-html/figure1-1.png)<!-- -->
+
+# References
+
+- Jim Lawrence (2016) "How Much Do Startups Impact Employment Growth in the U.S.?", published at [http://researchmatters.blogs.census.gov/2016/12/01/how-much-do-startups-impact-employment-growth-in-the-u-s/]() on December 1, 2016
 
