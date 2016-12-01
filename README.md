@@ -1,6 +1,7 @@
 # Replication for: How Much Do Startups Impact Employment Growth in the U.S.?
 Lars Vilhuber  
 December 1, 2016  
+[![DOI](https://zenodo.org/badge/75326479.svg)](https://zenodo.org/badge/latestdoi/75326479)
 
 
 

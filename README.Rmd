@@ -11,6 +11,7 @@ output:
     theme: journal
     toc: yes
 ---
+[![DOI](https://zenodo.org/badge/75326479.svg)](https://zenodo.org/badge/latestdoi/75326479)
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
