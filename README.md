@@ -7,7 +7,7 @@ December 1, 2016
 
 
 # Source document
-A blog post [by Jim Lawrence, U.S. Census Bureau](http://researchmatters.blogs.census.gov/2016/12/01/how-much-do-startups-impact-employment-growth-in-the-u-s/).
+A blog post [by Jim Lawrence, U.S. Census Bureau](http://researchmatters.blogs.census.gov/2016/12/01/how-much-do-startups-impact-employment-growth-in-the-u-s/) ([archived version](https://web.archive.org/web/20161229210623/http://researchmatters.blogs.census.gov/2016/12/01/how-much-do-startups-impact-employment-growth-in-the-u-s/), [locally archived version](archive/index.html)).
 
 # Source data
 Data to produce a graph like this can be found at https://www.census.gov/ces/dataproducts/bds/data_firm.html. Users can look at the economy-wide data by age of the firm, where startups are firms with zero age:
@@ -15,7 +15,7 @@ Data to produce a graph like this can be found at https://www.census.gov/ces/dat
 ![Select Firm Age](Selection_316.png)
 
 # Getting and manipulating the data
-We will illustrate how to generate Figure 1 using R (R Core Team, 2016). Users wishing to use Javascript, SAS, or Excel, or Python, can achieve the same goal using the tool of their choice. Note that we will use the full CSV file at http://www2.census.gov/ces/bds/firm/bds_f_age_release.csv, but users might also want to consult the [BDS API](https://www.census.gov/data/developers/data-sets/business-dynamics.html).
+We will illustrate how to generate Figure 1 using R (R Core Team, 2017). Users wishing to use Javascript, SAS, or Excel, or Python, can achieve the same goal using the tool of their choice. Note that we will use the full CSV file at http://www2.census.gov/ces/bds/firm/bds_f_age_release.csv, but users might also want to consult the [BDS API](https://www.census.gov/data/developers/data-sets/business-dynamics.html).
 
 
 ```r
@@ -56,6 +56,8 @@ names(analysis) <- c("Year","Employment","Job Creation by Startups", "Job Creati
 
 Now we simply plot this for the time period 2004-2014:
 ![](README_files/figure-html/figure1-1.png)<!-- -->
+
+[compare to original](archive/bds1.jpg)
 
 # References
 

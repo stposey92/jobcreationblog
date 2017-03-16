@@ -26,7 +26,7 @@ library(knitcitations)
 ```
 
 # Source document
-A blog post [by Jim Lawrence, U.S. Census Bureau](http://researchmatters.blogs.census.gov/2016/12/01/how-much-do-startups-impact-employment-growth-in-the-u-s/).
+A blog post [by Jim Lawrence, U.S. Census Bureau](http://researchmatters.blogs.census.gov/2016/12/01/how-much-do-startups-impact-employment-growth-in-the-u-s/) ([archived version](https://web.archive.org/web/20161229210623/http://researchmatters.blogs.census.gov/2016/12/01/how-much-do-startups-impact-employment-growth-in-the-u-s/), [locally archived version](archive/index.html)).
 
 # Source data
 Data to produce a graph like this can be found at https://www.census.gov/ces/dataproducts/bds/data_firm.html. Users can look at the economy-wide data by age of the firm, where startups are firms with zero age:
@@ -83,6 +83,8 @@ gg <- ggplot(subset(analysis[,c("Year","Job Creation Rate by Startups")],Year > 
   ylim(0,3.5)
 gg
 ```
+
+[compare to original](archive/bds1.jpg)
 
 # References
 ```{r, echo=FALSE, include=FALSE}
