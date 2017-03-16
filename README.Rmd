@@ -13,7 +13,7 @@ output:
 csl: acm-siggraph.csl
 bibliography: references.bib
 ---
-[![DOI](https://zenodo.org/badge/75326479.svg)](https://zenodo.org/badge/latestdoi/75326479)
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.400356.svg)](https://doi.org/10.5281/zenodo.400356)
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
