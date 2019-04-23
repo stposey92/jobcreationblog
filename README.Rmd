@@ -11,7 +11,10 @@ output:
   pdf_document:
     toc: yes
 csl: acm-siggraph.csl
-bibliography: references.bib
+bibliography: [references.bib,original.bib]
+nocite: |
+  @allaire2019rmarkdown, @arnold2018ggthemes, @wickham2016ggplot2, @xie2019knitr
+
 ---
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.400356.svg)](https://doi.org/10.5281/zenodo.400356)
 
@@ -20,13 +23,17 @@ knitr::opts_chunk$set(echo = TRUE)
 ```
 ```{r setup2, echo=FALSE, message=FALSE, warning=FALSE}
 library(knitcitations)
-#citep(citation("ggplot2"))
-#citep(citation("ggthemes"))
-#citep(citation("knitr"))
+record_as_cited(citation("rmarkdown"))
+record_as_cited(citation("base"))
+record_as_cited(citation("ggplot2"))
+record_as_cited(citation("ggthemes"))
+record_as_cited(citation("knitr"))
+
+write.bibtex(file="references.bib")
 ```
 
 # Source document
-A blog post [by Jim Lawrence, U.S. Census Bureau](http://researchmatters.blogs.census.gov/2016/12/01/how-much-do-startups-impact-employment-growth-in-the-u-s/) ([archived version](https://web.archive.org/web/20161229210623/http://researchmatters.blogs.census.gov/2016/12/01/how-much-do-startups-impact-employment-growth-in-the-u-s/), [locally archived version](archive/index.html)).
+A blog post [by Jim Lawrence, U.S. Census Bureau](http://researchmatters.blogs.census.gov/2016/12/01/how-much-do-startups-impact-employment-growth-in-the-u-s/) [-@lawrence2016] ([archived version](https://web.archive.org/web/20161229210623/http://researchmatters.blogs.census.gov/2016/12/01/how-much-do-startups-impact-employment-growth-in-the-u-s/),  [locally archived version](archive/index.html)).
 
 # Source data
 Data to produce a graph like this can be found at https://www.census.gov/ces/dataproducts/bds/data_firm.html. Users can look at the economy-wide data by age of the firm, where startups are firms with zero age:
@@ -34,7 +41,7 @@ Data to produce a graph like this can be found at https://www.census.gov/ces/dat
 ![Select Firm Age](Selection_316.png)
 
 # Getting and manipulating the data
-We will illustrate how to generate Figure 1 using R `r citep(citation("base"))`. Users wishing to use Javascript, SAS, or Excel, or Python, can achieve the same goal using the tool of their choice. Note that we will use the full CSV file at http://www2.census.gov/ces/bds/firm/bds_f_age_release.csv, but users might also want to consult the [BDS API](https://www.census.gov/data/developers/data-sets/business-dynamics.html).
+We will illustrate how to generate Figure 1 using R -@2019language. Users wishing to use Javascript, SAS, or Excel, or Python, can achieve the same goal using the tool of their choice. Note that we will use the full CSV file at http://www2.census.gov/ces/bds/firm/bds_f_age_release.csv, but users might also want to consult the [BDS API](https://www.census.gov/data/developers/data-sets/business-dynamics.html).
 
 ```{r config}
 bdsbase <- "http://www2.census.gov/ces/bds/"
@@ -79,16 +86,14 @@ gg <- ggplot(subset(analysis[,c("Year","Job Creation Rate by Startups")],Year > 
   geom_point() +
   theme_economist_white() +
   ylab("Percent of Overall Employment") +
-  ggtitle("Job Creation from Startups\n as a Percentage of Total U.S. Employment From 2004 to 2014") +
+  ggtitle("Job Creation from Startups\nas a Percentage of Total U.S. Employment\nFrom2004 to 2014") +
   ylim(0,3.5)
 gg
 ```
 
-[compare to original](archive/bds1.jpg)
+## Compare to original image:
+
+![original image](archive/bds1.jpg)
 
 # References
-```{r, echo=FALSE, include=FALSE}
-write.bibtex(file="references.bib")
-```
-- Jim Lawrence (2016) "How Much Do Startups Impact Employment Growth in the U.S.?", published at http://researchmatters.blogs.census.gov/2016/12/01/how-much-do-startups-impact-employment-growth-in-the-u-s/ on December 1, 2016
 
