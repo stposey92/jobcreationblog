@@ -41,21 +41,26 @@ ltype <- "firm"
 # for economy-wide data
 ewtype <- "f_all"
 
-fafile <- paste(ltype,"/bds_",type,"_release.csv",sep="")
-ewfile <- paste(ltype,"/bds_",ewtype,"_release.csv",sep="")
+fafile <- paste("bds_",type,"_release.csv",sep="")
+ewfile <- paste("bds_",ewtype,"_release.csv",sep="")
+
+# this changes whether we read live data or Zenodo data
+bds.from.source <- TRUE
 ```
 
-We are going to read in two files: the economy wide file ` firm/bds_f_all_release.csv `, and the by-firm-age file ` firm/bds_f_age_release.csv `:
+We are going to read in two files: the economy wide file ` bds_f_all_release.csv `, and the by-firm-age file ` bds_f_age_release.csv `:
 
 ```r
 # we need the particular type 
-conr <- gzcon(url(paste(bdsbase,fafile,sep="/")))
-txt <- readLines(conr)
-bdstype <- read.csv(textConnection(txt))
-# the ew file
-ewcon <- gzcon(url(paste(bdsbase,ewfile,sep="/")))
-ewtxt <- readLines(ewcon)
-bdsew <- read.csv(textConnection(ewtxt))
+if ( bds.from.source ) {
+  conr <- gzcon(url(paste(bdsbase,ltype,fafile,sep="/")))
+  txt <- readLines(conr)
+  bdstype <- read.csv(textConnection(txt))
+  # the ew file
+  ewcon <- gzcon(url(paste(bdsbase,ltype,ewfile,sep="/")))
+  ewtxt <- readLines(ewcon)
+  bdsew <- read.csv(textConnection(ewtxt))
+}
 ```
 We're going to now compute the fraction of total U.S. employment (`Emp`) that is accounted for by job creation from startups (`Job_Creation if fage4="a) 0"`):
 
