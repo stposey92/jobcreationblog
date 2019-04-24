@@ -12,7 +12,7 @@ pkgTest <- function(x)
   return("OK")
 }
 
-global.libraries <- c("dplyr","rmarkdown","ggplot2","ggthemes","knitr")
+global.libraries <- c("dplyr","rmarkdown","ggplot2","ggthemes","knitr","rjson","tidyr")
 
 results <- sapply(as.list(global.libraries), pkgTest)
 

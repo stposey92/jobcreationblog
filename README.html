@@ -488,8 +488,8 @@ $(document).ready(function () {
 <a class="sourceLine" id="cb1-8" data-line-number="8">ewfile &lt;-<span class="st"> </span><span class="kw">paste</span>(<span class="st">&quot;bds_&quot;</span>,ewtype,<span class="st">&quot;_release.csv&quot;</span>,<span class="dt">sep=</span><span class="st">&quot;&quot;</span>)</a>
 <a class="sourceLine" id="cb1-9" data-line-number="9"></a>
 <a class="sourceLine" id="cb1-10" data-line-number="10"><span class="co"># this changes whether we read live data or Zenodo data</span></a>
-<a class="sourceLine" id="cb1-11" data-line-number="11">bds.from.source &lt;-<span class="st"> </span><span class="ot">TRUE</span></a></code></pre></div>
-<p>We are going to read in two files: the economy wide file <code>bds_f_all_release.csv</code>, and the by-firm-age file <code>bds_f_age_release.csv</code>. If <code>bds.from.source</code> is <code>TRUE</code>, we read the most current file from the Census Bureau website. If <code>bds.from.source</code> is <code>FALSE</code>, we read from Zenodo. In this run, <code>bds.from.source</code> is <strong><code>TRUE</code></strong>.</p>
+<a class="sourceLine" id="cb1-11" data-line-number="11">bds.from.source &lt;-<span class="st"> </span><span class="ot">FALSE</span></a></code></pre></div>
+<p>We are going to read in two files: the economy wide file <code>bds_f_all_release.csv</code>, and the by-firm-age file <code>bds_f_age_release.csv</code>. If <code>bds.from.source</code> is <code>TRUE</code>, we read the most current file from the Census Bureau website. If <code>bds.from.source</code> is <code>FALSE</code>, we read from Zenodo, at DOI <strong>10.5281/zenodo.2649598</strong>. In this run, <code>bds.from.source</code> is <strong><code>FALSE</code></strong>.</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="co"># we need the particular type </span></a>
 <a class="sourceLine" id="cb2-2" data-line-number="2"><span class="cf">if</span> ( bds.from.source ) {</a>
 <a class="sourceLine" id="cb2-3" data-line-number="3">  conr &lt;-<span class="st"> </span><span class="kw">gzcon</span>(<span class="kw">url</span>(<span class="kw">paste</span>(bdsbase,ltype,fafile,<span class="dt">sep=</span><span class="st">&quot;/&quot;</span>)))</a>
@@ -501,17 +501,46 @@ $(document).ready(function () {
 <a class="sourceLine" id="cb2-9" data-line-number="9">  bdsew &lt;-<span class="st"> </span><span class="kw">read.csv</span>(<span class="kw">textConnection</span>(ewtxt))</a>
 <a class="sourceLine" id="cb2-10" data-line-number="10">} <span class="cf">else</span> {</a>
 <a class="sourceLine" id="cb2-11" data-line-number="11">  <span class="co"># if not, we read the special file to read it from Zenodo</span></a>
-<a class="sourceLine" id="cb2-12" data-line-number="12">  <span class="kw">source</span>(<span class="st">&quot;global-config.R&quot;</span>,<span class="dt">echo=</span><span class="ot">TRUE</span>)</a>
-<a class="sourceLine" id="cb2-13" data-line-number="13">  <span class="kw">source</span>(<span class="st">&quot;01_download_replication_data.R&quot;</span>,<span class="dt">echo=</span><span class="ot">TRUE</span>)</a>
-<a class="sourceLine" id="cb2-14" data-line-number="14">  bdstype &lt;-<span class="st"> </span><span class="kw">read.csv</span>(<span class="kw">file.path</span>(dataloc,fafile))</a>
-<a class="sourceLine" id="cb2-15" data-line-number="15">  bdsew &lt;-<span class="st"> </span><span class="kw">read.csv</span>(<span class="kw">file.path</span>(dataloc,ewfile))</a>
-<a class="sourceLine" id="cb2-16" data-line-number="16">}</a></code></pre></div>
+<a class="sourceLine" id="cb2-12" data-line-number="12">  <span class="kw">source</span>(<span class="st">&quot;01_download_replication_data.R&quot;</span>,<span class="dt">echo=</span><span class="ot">TRUE</span>)</a>
+<a class="sourceLine" id="cb2-13" data-line-number="13">  bdstype &lt;-<span class="st"> </span><span class="kw">read.csv</span>(<span class="kw">file.path</span>(dataloc,fafile))</a>
+<a class="sourceLine" id="cb2-14" data-line-number="14">  bdsew &lt;-<span class="st"> </span><span class="kw">read.csv</span>(<span class="kw">file.path</span>(dataloc,ewfile))</a>
+<a class="sourceLine" id="cb2-15" data-line-number="15">}</a></code></pre></div>
+<pre><code>## 
+## &gt; download.file(paste0(zenodo.api, zenodo.id), destfile = file.path(dataloc, 
+## +     &quot;metadata.json&quot;))
+## 
+## &gt; latest &lt;- fromJSON(file = file.path(dataloc, &quot;metadata.json&quot;))
+## 
+## &gt; print(paste0(&quot;DOI: &quot;, latest$links$doi))
+## [1] &quot;DOI: https://doi.org/10.5281/zenodo.2649598&quot;
+## 
+## &gt; print(paste0(&quot;Current: &quot;, latest$links$html))
+## [1] &quot;Current: https://zenodo.org/record/2649598&quot;
+## 
+## &gt; print(paste0(&quot;Latest: &quot;, latest$links$latest_html))
+## [1] &quot;Latest: https://zenodo.org/record/2649598&quot;
+## 
+## &gt; file.list &lt;- as.data.frame(latest$files) %&gt;% select(starts_with(&quot;self&quot;)) %&gt;% 
+## +     gather()</code></pre>
+<pre><code>## Warning: attributes are not identical across measure variables;
+## they will be dropped</code></pre>
+<pre><code>## 
+## &gt; for (value in file.list$value) {
+## +     print(value)
+## +     if (grepl(&quot;csv&quot;, value)) {
+## +         print(&quot;Downloading...&quot;)
+## +         file.name &lt;- basena .... [TRUNCATED] 
+## [1] &quot;https://zenodo.org/api/files/1bed249a-f4d5-4a80-a2d3-0cc3cf509c47/BDS_Codebook.pdf&quot;
+## [1] &quot;https://zenodo.org/api/files/1bed249a-f4d5-4a80-a2d3-0cc3cf509c47/bds_f_age_release.csv&quot;
+## [1] &quot;Downloading...&quot;
+## [1] &quot;https://zenodo.org/api/files/1bed249a-f4d5-4a80-a2d3-0cc3cf509c47/bds_f_all_release.csv&quot;
+## [1] &quot;Downloading...&quot;</code></pre>
 <p>We’re going to now compute the fraction of total U.S. employment (<code>Emp</code>) that is accounted for by job creation from startups (<code>Job_Creation if fage4=&quot;a) 0&quot;</code>):</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1">analysis &lt;-<span class="st"> </span>bdsew[,<span class="kw">c</span>(<span class="st">&quot;year2&quot;</span>,<span class="st">&quot;emp&quot;</span>)]</a>
-<a class="sourceLine" id="cb3-2" data-line-number="2">analysis &lt;-<span class="st"> </span><span class="kw">merge</span>(<span class="dt">x =</span> analysis, <span class="dt">y=</span><span class="kw">subset</span>(bdstype,fage4<span class="op">==</span><span class="st">&quot;a) 0&quot;</span>)[,<span class="kw">c</span>(<span class="st">&quot;year2&quot;</span>,<span class="st">&quot;Job_Creation&quot;</span>)], <span class="dt">by=</span><span class="st">&quot;year2&quot;</span>)</a>
-<a class="sourceLine" id="cb3-3" data-line-number="3">analysis<span class="op">$</span>JCR_startups &lt;-<span class="st"> </span>analysis<span class="op">$</span>Job_Creation <span class="op">*</span><span class="st"> </span><span class="dv">100</span> <span class="op">/</span><span class="st"> </span>analysis<span class="op">$</span>emp</a>
-<a class="sourceLine" id="cb3-4" data-line-number="4"><span class="co"># properly name everything</span></a>
-<a class="sourceLine" id="cb3-5" data-line-number="5"><span class="kw">names</span>(analysis) &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;Year&quot;</span>,<span class="st">&quot;Employment&quot;</span>,<span class="st">&quot;Job Creation by Startups&quot;</span>, <span class="st">&quot;Job Creation Rate by Startups&quot;</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" data-line-number="1">analysis &lt;-<span class="st"> </span>bdsew[,<span class="kw">c</span>(<span class="st">&quot;year2&quot;</span>,<span class="st">&quot;emp&quot;</span>)]</a>
+<a class="sourceLine" id="cb6-2" data-line-number="2">analysis &lt;-<span class="st"> </span><span class="kw">merge</span>(<span class="dt">x =</span> analysis, <span class="dt">y=</span><span class="kw">subset</span>(bdstype,fage4<span class="op">==</span><span class="st">&quot;a) 0&quot;</span>)[,<span class="kw">c</span>(<span class="st">&quot;year2&quot;</span>,<span class="st">&quot;Job_Creation&quot;</span>)], <span class="dt">by=</span><span class="st">&quot;year2&quot;</span>)</a>
+<a class="sourceLine" id="cb6-3" data-line-number="3">analysis<span class="op">$</span>JCR_startups &lt;-<span class="st"> </span>analysis<span class="op">$</span>Job_Creation <span class="op">*</span><span class="st"> </span><span class="dv">100</span> <span class="op">/</span><span class="st"> </span>analysis<span class="op">$</span>emp</a>
+<a class="sourceLine" id="cb6-4" data-line-number="4"><span class="co"># properly name everything</span></a>
+<a class="sourceLine" id="cb6-5" data-line-number="5"><span class="kw">names</span>(analysis) &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;Year&quot;</span>,<span class="st">&quot;Employment&quot;</span>,<span class="st">&quot;Job Creation by Startups&quot;</span>, <span class="st">&quot;Job Creation Rate by Startups&quot;</span>)</a></code></pre></div>
 </div>
 <div id="create-figure-1" class="section level1">
 <h1>Create Figure 1</h1>

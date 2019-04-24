@@ -57,11 +57,11 @@ fafile <- paste("bds_",type,"_release.csv",sep="")
 ewfile <- paste("bds_",ewtype,"_release.csv",sep="")
 
 # this changes whether we read live data or Zenodo data
-bds.from.source <- TRUE
+bds.from.source <- FALSE
 ```
 
-We are going to read in two files: the economy wide file ` `r ewfile` `, and the by-firm-age file ` `r fafile` `. If `bds.from.source` is `TRUE`, we read the most current file from the Census Bureau website. If `bds.from.source` is `FALSE`, we read from Zenodo. In this run, `bds.from.source` is **` `r bds.from.source` `**.
-```{r readbds}
+We are going to read in two files: the economy wide file ` `r ewfile` `, and the by-firm-age file ` `r fafile` `. If `bds.from.source` is `TRUE`, we read the most current file from the Census Bureau website. If `bds.from.source` is `FALSE`, we read from Zenodo, at DOI **`r paste0(zenodo.prefix,".",zenodo.id)`**. In this run, `bds.from.source` is **` `r bds.from.source` `**.
+```{r readbds,cache=TRUE}
 # we need the particular type 
 if ( bds.from.source ) {
   conr <- gzcon(url(paste(bdsbase,ltype,fafile,sep="/")))
@@ -73,13 +73,17 @@ if ( bds.from.source ) {
   bdsew <- read.csv(textConnection(ewtxt))
 } else {
   # if not, we read the special file to read it from Zenodo
-  source("global-config.R",echo=TRUE)
   source("01_download_replication_data.R",echo=TRUE)
   bdstype <- read.csv(file.path(dataloc,fafile))
   bdsew <- read.csv(file.path(dataloc,ewfile))
 }
 ```
-`r if ( bds.from.source) {} else {print(paste0("We obtained the data files from DOI **",zenodo.prefix,".",zenodo.id,"**."))}`
+
+```{r print,include=FALSE,render="as-is"}
+if ( !bds.from.source )  {
+  print(paste0("We obtained the data files from DOI **",zenodo.prefix,".",zenodo.id,"**."))
+  }
+```
 We're going to now compute the fraction of total U.S. employment (`Emp`) that is accounted for by job creation from startups (`Job_Creation if fage4="a) 0"`):
 
 ```{r compute_jcrate}

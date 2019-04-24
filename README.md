@@ -45,10 +45,10 @@ fafile <- paste("bds_",type,"_release.csv",sep="")
 ewfile <- paste("bds_",ewtype,"_release.csv",sep="")
 
 # this changes whether we read live data or Zenodo data
-bds.from.source <- TRUE
+bds.from.source <- FALSE
 ```
 
-We are going to read in two files: the economy wide file ` bds_f_all_release.csv `, and the by-firm-age file ` bds_f_age_release.csv `. If `bds.from.source` is `TRUE`, we read the most current file from the Census Bureau website. If `bds.from.source` is `FALSE`, we read from Zenodo. In this run, `bds.from.source` is **` TRUE `**.
+We are going to read in two files: the economy wide file ` bds_f_all_release.csv `, and the by-firm-age file ` bds_f_age_release.csv `. If `bds.from.source` is `TRUE`, we read the most current file from the Census Bureau website. If `bds.from.source` is `FALSE`, we read from Zenodo, at DOI **10.5281/zenodo.2649598**. In this run, `bds.from.source` is **` FALSE `**.
 
 ```r
 # we need the particular type 
@@ -62,12 +62,51 @@ if ( bds.from.source ) {
   bdsew <- read.csv(textConnection(ewtxt))
 } else {
   # if not, we read the special file to read it from Zenodo
-  source("global-config.R",echo=TRUE)
   source("01_download_replication_data.R",echo=TRUE)
   bdstype <- read.csv(file.path(dataloc,fafile))
   bdsew <- read.csv(file.path(dataloc,ewfile))
 }
 ```
+
+```
+## 
+## > download.file(paste0(zenodo.api, zenodo.id), destfile = file.path(dataloc, 
+## +     "metadata.json"))
+## 
+## > latest <- fromJSON(file = file.path(dataloc, "metadata.json"))
+## 
+## > print(paste0("DOI: ", latest$links$doi))
+## [1] "DOI: https://doi.org/10.5281/zenodo.2649598"
+## 
+## > print(paste0("Current: ", latest$links$html))
+## [1] "Current: https://zenodo.org/record/2649598"
+## 
+## > print(paste0("Latest: ", latest$links$latest_html))
+## [1] "Latest: https://zenodo.org/record/2649598"
+## 
+## > file.list <- as.data.frame(latest$files) %>% select(starts_with("self")) %>% 
+## +     gather()
+```
+
+```
+## Warning: attributes are not identical across measure variables;
+## they will be dropped
+```
+
+```
+## 
+## > for (value in file.list$value) {
+## +     print(value)
+## +     if (grepl("csv", value)) {
+## +         print("Downloading...")
+## +         file.name <- basena .... [TRUNCATED] 
+## [1] "https://zenodo.org/api/files/1bed249a-f4d5-4a80-a2d3-0cc3cf509c47/BDS_Codebook.pdf"
+## [1] "https://zenodo.org/api/files/1bed249a-f4d5-4a80-a2d3-0cc3cf509c47/bds_f_age_release.csv"
+## [1] "Downloading..."
+## [1] "https://zenodo.org/api/files/1bed249a-f4d5-4a80-a2d3-0cc3cf509c47/bds_f_all_release.csv"
+## [1] "Downloading..."
+```
+
 
 We're going to now compute the fraction of total U.S. employment (`Emp`) that is accounted for by job creation from startups (`Job_Creation if fage4="a) 0"`):
 
