@@ -11,7 +11,7 @@ output:
   pdf_document:
     toc: yes
 csl: acm-siggraph.csl
-bibliography: [references.bib,original.bib]
+bibliography: [references.bib,original.bib,references-alt.bib]
 nocite: |
   @allaire2019rmarkdown, @arnold2018ggthemes, @wickham2016ggplot2, @xie2019knitr
 
@@ -40,20 +40,20 @@ type <- "f_age"
 ltype <- "firm"
 # for economy-wide data
 ewtype <- "f_all"
+
+fafile <- paste(ltype,"/bds_",type,"_release.csv",sep="")
+ewfile <- paste(ltype,"/bds_",ewtype,"_release.csv",sep="")
 ```
-We are going to read in two files: the economy wide file, and the by-firm-age file:
+
+We are going to read in two files: the economy wide file, and the by-firm-age file ` firm/bds_f_age_release.csv `:
 
 ```r
 # we need the particular type 
-conr <- gzcon(url(
-  paste(bdsbase,"/",ltype,"/bds_",type,"_release.csv",
-        sep="")))
+conr <- gzcon(url(paste(bdsbase,fafile,sep="/")))
 txt <- readLines(conr)
 bdstype <- read.csv(textConnection(txt))
 # the ew file
-ewcon <- gzcon(url(
-  paste(bdsbase,"/",ltype,"/bds_",ewtype,"_release.csv",
-        sep="")))
+ewcon <- gzcon(url(paste(bdsbase,ewfile,sep="/")))
 ewtxt <- readLines(ewcon)
 bdsew <- read.csv(textConnection(ewtxt))
 ```
