@@ -45,7 +45,7 @@ fafile <- paste(ltype,"/bds_",type,"_release.csv",sep="")
 ewfile <- paste(ltype,"/bds_",ewtype,"_release.csv",sep="")
 ```
 
-We are going to read in two files: the economy wide file, and the by-firm-age file ` firm/bds_f_age_release.csv `:
+We are going to read in two files: the economy wide file ` firm/bds_f_all_release.csv `, and the by-firm-age file ` firm/bds_f_age_release.csv `:
 
 ```r
 # we need the particular type 

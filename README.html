@@ -486,7 +486,7 @@ $(document).ready(function () {
 <a class="sourceLine" id="cb1-6" data-line-number="6"></a>
 <a class="sourceLine" id="cb1-7" data-line-number="7">fafile &lt;-<span class="st"> </span><span class="kw">paste</span>(ltype,<span class="st">&quot;/bds_&quot;</span>,type,<span class="st">&quot;_release.csv&quot;</span>,<span class="dt">sep=</span><span class="st">&quot;&quot;</span>)</a>
 <a class="sourceLine" id="cb1-8" data-line-number="8">ewfile &lt;-<span class="st"> </span><span class="kw">paste</span>(ltype,<span class="st">&quot;/bds_&quot;</span>,ewtype,<span class="st">&quot;_release.csv&quot;</span>,<span class="dt">sep=</span><span class="st">&quot;&quot;</span>)</a></code></pre></div>
-<p>We are going to read in two files: the economy wide file, and the by-firm-age file <code>firm/bds_f_age_release.csv</code>:</p>
+<p>We are going to read in two files: the economy wide file <code>firm/bds_f_all_release.csv</code>, and the by-firm-age file <code>firm/bds_f_age_release.csv</code>:</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="co"># we need the particular type </span></a>
 <a class="sourceLine" id="cb2-2" data-line-number="2">conr &lt;-<span class="st"> </span><span class="kw">gzcon</span>(<span class="kw">url</span>(<span class="kw">paste</span>(bdsbase,fafile,<span class="dt">sep=</span><span class="st">&quot;/&quot;</span>)))</a>
 <a class="sourceLine" id="cb2-3" data-line-number="3">txt &lt;-<span class="st"> </span><span class="kw">readLines</span>(conr)</a>
