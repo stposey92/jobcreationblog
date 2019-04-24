@@ -18,6 +18,7 @@ results <- sapply(as.list(global.libraries), pkgTest)
 
 # file locations
 # Main directories
+basepath <- file.path(getwd())
 dataloc <- file.path(basepath, "data")
 
 for ( dir in list(dataloc)){

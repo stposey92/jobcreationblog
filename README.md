@@ -48,7 +48,7 @@ ewfile <- paste("bds_",ewtype,"_release.csv",sep="")
 bds.from.source <- TRUE
 ```
 
-We are going to read in two files: the economy wide file ` bds_f_all_release.csv `, and the by-firm-age file ` bds_f_age_release.csv `:
+We are going to read in two files: the economy wide file ` bds_f_all_release.csv `, and the by-firm-age file ` bds_f_age_release.csv `. If `bds.from.source` is `TRUE`, we read the most current file from the Census Bureau website. If `bds.from.source` is `FALSE`, we read from Zenodo. In this run, `bds.from.source` is **` TRUE `**.
 
 ```r
 # we need the particular type 
@@ -60,8 +60,15 @@ if ( bds.from.source ) {
   ewcon <- gzcon(url(paste(bdsbase,ltype,ewfile,sep="/")))
   ewtxt <- readLines(ewcon)
   bdsew <- read.csv(textConnection(ewtxt))
+} else {
+  # if not, we read the special file to read it from Zenodo
+  source("global-config.R",echo=TRUE)
+  source("01_download_replication_data.R",echo=TRUE)
+  bdstype <- read.csv(file.path(dataloc,fafile))
+  bdsew <- read.csv(file.path(dataloc,ewfile))
 }
 ```
+
 We're going to now compute the fraction of total U.S. employment (`Emp`) that is accounted for by job creation from startups (`Job_Creation if fage4="a) 0"`):
 
 
