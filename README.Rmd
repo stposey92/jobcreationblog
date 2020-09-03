@@ -1,7 +1,7 @@
 ---
 title: 'Replication for: How Much Do Startups Impact Employment Growth in the U.S.?'
-author: "Lars Vilhuber"
-date: "December 1, 2016"
+author: "Lars Vilhuber edited by Sean Posey"
+date: "September 1, 2020"
 output:
   html_document:
     highlight: tango
@@ -21,6 +21,7 @@ nocite: |
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 # hidden dependency
+# hidden dependency, this downloads neccessary packages
 source("global-config.R",echo=FALSE)
 ```
 ```{r setup2, echo=FALSE, message=FALSE, warning=FALSE}
